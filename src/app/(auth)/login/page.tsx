@@ -1,12 +1,15 @@
+
+
 import { Button } from "@/components/ui/button";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React from "react";
+
 
 const LoginPage: React.FC = () => {
   return (
     <div className="flex items-center justify-center min-h-screen ">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
+      <div className="border-black w-full max-w-md p-8 space-y-6  rounded shadow-xl">
         <h2 className="text-2xl font-bold text-center">Login</h2>
         <form className="space-y-6">
           <div>
