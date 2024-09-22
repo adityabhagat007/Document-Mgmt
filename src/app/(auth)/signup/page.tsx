@@ -1,15 +1,12 @@
 "use client";
 
-import { account } from "@/appwrite/app";
-import { ID } from "appwrite";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import Error from "next/error";
-
 
 export default function SignupForm() {
   const [formObject, setFormObject] = useState({
@@ -32,23 +29,36 @@ export default function SignupForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await account.create(
-        ID.unique(),
-        formObject.email,
-        formObject.password,
-        formObject.name
-      );
-      setFormObject({ email: "", password: "", name: "" });
-      router.push("/login");
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
+      const res = await fetch("/api/user/create-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formObject),
       });
-      } catch (error: any) {
+      const data = await res.json();
+      if (res.ok) {
+        setFormObject({ email: "", password: "", name: "" });
+        router.push("/login");
+        toast({
+          variant: "default",
+          title: "Great ,you have created a account",
+          description:"Please login to continue"
+        });
+      }else{
+        console.log(res);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: data.message,
+        });
+      }
+    } catch (error: unknown) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error.message,
+        description:
+          error instanceof Error ? error.message : "An unknown error occurred",
       });
       console.log(error);
     }
@@ -67,7 +77,6 @@ export default function SignupForm() {
               value={formObject.name}
               onChange={(e) => handleChange(e)}
               required
-              
             />
           </div>
           <div>
