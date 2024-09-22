@@ -1,4 +1,76 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Document Management System
+
+This project is a Document Management System built with Next.js and Appwrite. It allows users to upload, manage, and share documents securely.
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- You have installed Node.js and npm.
+- You have an Appwrite instance running.
+
+## Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/yourusername/document-mgm-zoop.git
+    ```
+
+2. Navigate to the project directory:
+
+    ```bash
+    cd document-mgm-zoop
+    ```
+
+3. Install the dependencies:
+
+    ```bash
+    npm install
+    ```
+
+4. Create a `.env.local` file in the root of your project and add the following environment variables:
+
+    ```env
+    NEXT_PUBLIC_APPWRITE_ENDPOINT=https://[YOUR_APPWRITE_ENDPOINT]
+    NEXT_PUBLIC_APPWRITE_PROJECT=[YOUR_APPWRITE_PROJECT_ID]
+    NEXT_PUBLIC_APPWRITE_DATABASE_ID=[YOUR_APPWRITE_DATABASE_ID]
+    NEXT_PUBLIC_APPWRITE_COLLECTION_ID=[YOUR_APPWRITE_COLLECTION_ID]
+    ```
+
+## Features
+
+- User authentication with Appwrite
+- Document upload and management
+- Secure document sharing
+- Real-time updates
+
+## Usage
+
+1. Start the development server:
+
+    ```bash
+    npm run dev
+    ```
+
+2. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+3. You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+## Contributing
+
+To contribute to this project, follow these steps:
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/your-feature`
+3. Make your changes and commit them: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Getting Started
 
