@@ -1,4 +1,4 @@
-import { account, databases, storage } from "@/appwrite/app";
+import { storage } from "@/appwrite/app";
 import { config } from "@/appwrite/config";
 import { ID } from "appwrite";
 import { NextRequest, NextResponse } from "next/server";

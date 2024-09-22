@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const LoginPage: React.FC = () => {
@@ -14,6 +15,7 @@ const LoginPage: React.FC = () => {
     password: "",
   });
   const {toast} = useToast();
+  const router = useRouter();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormObject((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -27,14 +29,22 @@ const LoginPage: React.FC = () => {
         title: "Welcome back!",
         description: "Logged in successfully",
       });
+      router.push("/user");
     }
-  }catch(e){
-    console.log(e)
-    toast({
-      variant: "destructive",
-      title: "Error",
-      description: e.message,
-    })
+  }catch(e:unknown){
+    if (e instanceof Error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: e.message,
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "An unknown error occurred",
+      });
+    }
   }
   };
   return (
@@ -74,7 +84,7 @@ const LoginPage: React.FC = () => {
           </div>
           <div>
             <Button type="submit" variant={"default"} className="w-full">
-              Sign up
+              Login
             </Button>
           </div>
         </form>
