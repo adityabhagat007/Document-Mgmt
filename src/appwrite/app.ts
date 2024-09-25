@@ -3,7 +3,8 @@ import { config } from "./config";
 
 const client = new Client()
     .setEndpoint(config.endpoint) 
-    .setProject(config.projectId); 
+    .setProject(config.projectId)
+    
 
 const databases = new Databases(client)
 const account = new Account(client);

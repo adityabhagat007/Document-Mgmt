@@ -4,11 +4,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { account } from "@/appwrite/app";
 
 export default function SignupForm() {
+  
   const [formObject, setFormObject] = useState({
     email: "",
     password: "",
@@ -17,6 +19,21 @@ export default function SignupForm() {
   const { toast } = useToast();
   const router = useRouter();
 
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const session = await account.get();
+        if (session) {
+          router.push("/user");
+        }
+      } catch (e: unknown) {
+        console.log("No active session found");
+      }
+    };
+  
+    checkSession();
+    
+    }, [])
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, value }: { name: string; value: string } =
       e.target as HTMLInputElement;
@@ -63,10 +80,11 @@ export default function SignupForm() {
       console.log(error);
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen ">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-xl">
+      <div className="border-black w-full max-w-md p-8 space-y-6  rounded shadow-xl">
         <h2 className="text-2xl font-bold text-center">SignUp</h2>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>

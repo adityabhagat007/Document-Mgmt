@@ -1,12 +1,13 @@
-import { storage } from "@/appwrite/app";
 import { config } from "@/appwrite/config";
 import { ID } from "appwrite";
 import { NextRequest, NextResponse } from "next/server";
+import { databases, storage } from "@/appwrite/app";
 
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const fileName = formData.get("fileName");
+    const userId = formData.get("userId");
     const file = formData.get("file") as File;
     console.log(fileName, file);
     if (!fileName || !file) {
@@ -21,27 +22,20 @@ export async function POST(req: NextRequest) {
       );
     }
     const id = ID.unique();
-    const response = await storage.createFile(
-      config.storageId || "",
+    const response = await storage.createFile(config.storageId || "", id, file);
+    const response2 = await databases.createDocument(
+      config.databaseId || "",
+      config.file_collection_id || "",
       id,
-      file
+      {
+        owner: userId,
+        filename: fileName,
+        fileLink:`${config.endpoint}/storage/buckets/${config.storageId}/files/${response.$id}/view?project=${config.projectId}`
+      }
     );
-    if (response) {
-    
-      // const response2 = await databases.createDocument(
-      //   config.databaseId || "",
-      //   config.collectionId || "",
-      //   id,
-      //   {
-      //     owner: user.$id,
-      //     fileName: fileName,
-      //     f
-      //   }
-      // );
-    }
     return NextResponse.json(
       {
-        data: response || null,
+        data: response2 || null,
         message: "file uploaded successfully",
       },
       {
@@ -61,3 +55,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+

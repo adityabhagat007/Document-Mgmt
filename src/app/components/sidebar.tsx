@@ -1,7 +1,17 @@
+"use client"
+import { account } from "@/appwrite/app";
 import { Button } from "@/components/ui/button";
 import { Home,Users } from 'lucide-react'; // Use lucide-react for icons.
+import { useRouter } from "next/navigation";
+
+
 
 const Sidebar = () => {
+  const router = useRouter();
+  const handleLogout = async () => {
+    await account.deleteSession("current");
+    router.push("/login");
+  }
   return (
     <aside className=" h-full border-r p-6">
       <div className="mb-8">
@@ -15,8 +25,8 @@ const Sidebar = () => {
             </Button>
           </li>
           <li className="mb-4">
-            <Button variant="ghost" className="w-full flex items-center gap-2">
-              <Users size={20} /> All Documents
+            <Button variant="ghost" className="w-full gap-2" onClick={()=>handleLogout()}>
+              <Users size={20} /> Logout
             </Button>
           </li>
         </ul>

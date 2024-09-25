@@ -7,45 +7,65 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const LoginPage: React.FC = () => {
   const [formObject, setFormObject] = useState({
     email: "",
     password: "",
   });
-  const {toast} = useToast();
+  const { toast } = useToast();
   const router = useRouter();
+
+  useEffect(() => {
+  const checkSession = async () => {
+    try {
+      const session = await account.get();
+      if (session) {
+        router.push("/user");
+      }
+    } catch (e: unknown) {
+      console.log("No active session found");
+    }
+  };
+
+  checkSession();
+  
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormObject((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try{
-    const res = await account.createEmailPasswordSession(formObject.email, formObject.password);
-    console.log(res,"login");
-    if (res) {
-      toast({
-        title: "Welcome back!",
-        description: "Logged in successfully",
-      });
-      router.push("/user");
+    try {
+      const res = await account.createEmailPasswordSession(
+        formObject.email,
+        formObject.password
+      );
+      console.log(res, "login");
+      if (res) {
+        toast({
+          title: "Welcome back!",
+          description: "Logged in successfully",
+        });
+        router.push("/user");
+      }
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: e.message,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "An unknown error occurred",
+        });
+      }
     }
-  }catch(e:unknown){
-    if (e instanceof Error) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: e.message,
-      });
-    } else {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "An unknown error occurred",
-      });
-    }
-  }
   };
   return (
     <div className="flex items-center justify-center min-h-screen ">

@@ -16,8 +16,13 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 import { useToast } from "@/hooks/use-toast";
+import { account } from "@/appwrite/app";
 
-export function DocumentUploadDialog() {
+interface DocumentUploadDialogProps {
+  setOpen: (open: boolean) => void;
+}
+
+export function DocumentUploadDialog({ setOpen }: DocumentUploadDialogProps) {
   const [formDetails, setFormDetails] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const { toast } = useToast();
@@ -26,9 +31,11 @@ export function DocumentUploadDialog() {
     const fileInput = file;
     const fileNameInput = formDetails;
     if (fileInput && fileNameInput) {
+      const user= await account.get();
       const formData = new FormData();
       formData.append("fileName", formDetails);
       formData.append("file", file);
+      formData.append("userId", user.$id);
 
       const res = await fetch("/api/files", {
         method: "POST",
@@ -42,6 +49,7 @@ export function DocumentUploadDialog() {
           title: "Success",
           description: data.message,
         });
+       setOpen((prev:boolean) => !prev);
       } else {
         toast({
           variant: "destructive",

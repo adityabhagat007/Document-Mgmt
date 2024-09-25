@@ -1,14 +1,32 @@
+"use client";
 import { Toaster } from "@/components/ui/toaster";
 import Sidebar from "../components/sidebar";
+import { useEffect } from "react";
+import { account } from "@/appwrite/app";
+import { useRouter } from "next/navigation";
+
 
 const DashboardLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const router = useRouter();
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        await account.get();
+      } catch (e: unknown) {
+        router.push("/login");
+      }
+    };
+
+    checkSession();
+  }, []);
+
   return (
     <div className="flex h-screen">
-      <Toaster/>
+      <Toaster />
       <div className="flex">
         <Sidebar />
       </div>
