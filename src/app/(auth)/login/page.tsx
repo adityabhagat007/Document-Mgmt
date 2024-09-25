@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -24,6 +25,7 @@ const LoginPage: React.FC = () => {
       if (session) {
         router.push("/user");
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e: unknown) {
       console.log("No active session found");
     }
@@ -94,12 +96,7 @@ const LoginPage: React.FC = () => {
           </div>
           <div className="flex items-center justify-between">
             <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot your password?
-              </a>
+                <Link href="/signup" className="text-blue-500"> Don&apos;t have account create here</Link>
             </div>
           </div>
           <div>

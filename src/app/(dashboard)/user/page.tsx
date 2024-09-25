@@ -17,7 +17,7 @@ interface DocumentsData {
 
 export default function UserPage() {
   const [data, setData] = useState<DocumentsData>({ documents: [], total: 0 });
-  const [open, setOpen] = useState(false);
+  const [update, setUpdate] = useState(false);
   React.useEffect(() => {
     const fetchDocuments = async () => {
       try {
@@ -35,11 +35,11 @@ export default function UserPage() {
       }
     };
     fetchDocuments();
-  }, [open]);
+  }, [update]);
 
   return (
     <div className='main'>
-      <DocumentUploadDialog setOpen={setOpen}/>
+      <DocumentUploadDialog setUpdate={setUpdate} update={update}/>
       <div className='w-96 mt-10'>
          <DocumentTable data={data}/>
       </div>

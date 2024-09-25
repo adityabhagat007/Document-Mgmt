@@ -16,6 +16,7 @@ const DashboardLayout = ({
     const checkSession = async () => {
       try {
         await account.get();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e: unknown) {
         router.push("/login");
       }

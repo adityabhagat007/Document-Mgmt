@@ -39,7 +39,7 @@ const DocumentTable: React.FC<DocumentTableProps> = ({ data }) => {
             <TableCell className="font-medium">{data.filename}</TableCell>
             <TableCell>{data.$createdAt}</TableCell>
             <TableCell>
-              <a href={data.fileLink}>view</a>
+              <a href={data.fileLink} target="_blank">view</a>
             </TableCell>
           </TableRow>
         ))}

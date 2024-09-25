@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { account } from "@/appwrite/app";
+import Link from "next/link";
 
 export default function SignupForm() {
   
@@ -26,6 +27,7 @@ export default function SignupForm() {
         if (session) {
           router.push("/user");
         }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e: unknown) {
         console.log("No active session found");
       }
@@ -119,12 +121,8 @@ export default function SignupForm() {
           </div>
           <div className="flex items-center justify-between">
             <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Already have an account?
-              </a>
+              <Link href="/login" className="text-blue-500">  Already have an account?</Link>
+               
             </div>
           </div>
           <div>

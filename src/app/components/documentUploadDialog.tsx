@@ -19,10 +19,11 @@ import { useToast } from "@/hooks/use-toast";
 import { account } from "@/appwrite/app";
 
 interface DocumentUploadDialogProps {
-  setOpen: (open: boolean) => void;
+  setUpdate: (open: boolean) => void;
+  update: boolean;
 }
 
-export function DocumentUploadDialog({ setOpen }: DocumentUploadDialogProps) {
+export function DocumentUploadDialog({ setUpdate ,update}: DocumentUploadDialogProps) {
   const [formDetails, setFormDetails] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const { toast } = useToast();
@@ -49,7 +50,7 @@ export function DocumentUploadDialog({ setOpen }: DocumentUploadDialogProps) {
           title: "Success",
           description: data.message,
         });
-       setOpen((prev:boolean) => !prev);
+       setUpdate(!update);
       } else {
         toast({
           variant: "destructive",
